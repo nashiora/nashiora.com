@@ -1,0 +1,127 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #1F1F1F;
+}
+
+header {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: #0A0A0A;
+    color: #E1E1E1;
+    box-shadow: 0 1px 1px rgba(0.04, 0.04, 0.04, 0.3),
+        0 2px 2px rgba(0.04, 0.04, 0.04, 0.3),
+        0 4px 4px rgba(0.04, 0.04, 0.04, 0.3),
+        0 8px 8px rgba(0.04, 0.04, 0.04, 0.3),
+        0 16px 16px rgba(0.04, 0.04, 0.04, 0.3);
+}
+
+main {
+    color: #E1E1E1;
+    width: 800px;
+    margin: auto;
+}
+
+.logo {
+    letter-spacing: 3px;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-around;
+    width: 15%;
+}
+
+.navlink {
+    list-style: none;
+    margin: 0;
+}
+
+.navlink a {
+    color: #E1E1E1;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.shadow-5 {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),
+        0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12),
+        0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+}
+
+pre {
+    background: #1A1A1A;
+    padding: 0.5rem;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),
+        0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12),
+        0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+}
+
+.sourceCode .kw {
+    color: #268BD2;
+}
+
+.sourceCode .op {
+    color: #999999;
+}
+
+.sourceCode .dt {
+    color: #268BD2;
+}
+
+.sourceCode .pp,
+.sourceCode .cf {
+    color: #268BD2;
+}
+
+.sourceCode .dv,
+.sourceCode .bn,
+.sourceCode .fl {
+    color: #D33682;
+}
+
+.sourceCode .ch {
+    color: #DC322F;
+}
+
+.sourceCode .st,
+.sourceCode .im {
+    color: #2AA198;
+}
+
+.sourceCode .sc {
+    color: #785AC1;
+}
+
+.sourceCode .co {
+    color: #93A1A1;
+}
+
+.sourceCode .ot {
+    color: #A57800;
+}
+
+.sourceCode .al {
+    color: #CB4B16;
+    font-weight: bold;
+}
+
+.sourceCode .fu {
+    color: #268BD2;
+}
+
+.sourceCode .re {}
+
+.sourceCode .er {
+    color: #D30102;
+    font-weight: bold;
+}
