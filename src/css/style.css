@@ -22,6 +22,8 @@ time, mark, audio, video {
 :root {
     --background: #1B1B1B;
     --panel: #343434;
+    --panel-challenges: #ff97a01A;
+    --panel-design-note: #67B7FF1A;
     --foreground: #FAFAFA;
     --foreground-dim: #909090;
     --primary: #FF97A0;
@@ -140,6 +142,10 @@ article {
 article p {
     margin-top: 1.2rem;
     margin-bottom: 0;
+}
+
+article a {
+    color: var(--primary);
 }
 
 article h1 {
@@ -277,6 +283,52 @@ article aside.down5 {
     margin-top: calc(5 * 1.2rem);
 }
 
+article div.challenges,
+article div.design-note {
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 1rem;
+}
+
+article div.challenges {
+    background-color: var(--panel-challenges);
+}
+
+article div.design-note {
+    background-color: var(--panel-design-note);
+}
+
+article div.challenges h1,
+article div.design-note h1 {
+    font-size: 3.2rem;
+    line-height: 3.2rem;
+    padding-top: 19px;
+    padding-bottom: 19px;
+}
+
+article div.challenges h2,
+article div.design-note h2 {
+    font-size: 2rem;
+    line-height: 2rem;
+    padding: 11px 0 0 3px;
+}
+
+article div.challenges h3,
+article div.design-note h3 {
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    padding: 11px 0 0 3px;
+}
+
+article div.challenges ul,
+article div.design-note ul,
+article div.challenges ol,
+article div.design-note ol {
+    margin-top: 1.75rem;
+    margin-left: 2rem;
+}
+
 .shadow-5 {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),
         0 2px 2px rgba(0, 0, 0, 0.12),
@@ -288,7 +340,7 @@ article aside.down5 {
 pre {
     font-family: 'Courier New', Courier, monospace;
     font-size: 1rem;
-    margin-top: 1.2rem;
+    margin-top: 1.5rem;
     background: var(--panel);
     padding: 0.5rem;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),

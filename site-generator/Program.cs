@@ -1,9 +1,19 @@
-﻿using Markdig;
-using Markdig.Syntax;
+﻿using System.Diagnostics;
 using SiteGenerator;
+using SiteGenerator.CompilerBook;
+
+if (Debugger.IsAttached)
+{
+    var cwd = new DirectoryInfo(Environment.CurrentDirectory);
+    while (!cwd.ChildDirectory("src").Exists)
+        cwd = cwd.Parent;
+    Environment.CurrentDirectory = cwd.FullName;
+}
 
 var sourceDir = new DirectoryInfo("src");
 var targetDir = new DirectoryInfo("public_html");
+
+var bookDir = sourceDir.ChildDirectory("compiler-book");
 
 targetDir.Delete(true);
 targetDir.Create();
@@ -14,22 +24,17 @@ targetDir.ChildFile("template.html").Delete();
 sourceDir.ChildDirectory("css").CopyTo(targetDir.ChildDirectory("css"));
 sourceDir.ChildDirectory("img").CopyTo(targetDir.ChildDirectory("img"));
 
-BuildZ2C();
+var bookParser = new CompilerBookChapterParser();
 
-void CompileChapterMarkdown(string htmlTemplateText, FileInfo mdFile, FileInfo targetFile)
-{
-    var mdDoc = Markdown.Parse(mdFile.ReadAllText());
-    string mdHtml = mdDoc.ToHtml();
-    string htmlText = htmlTemplateText.Replace("$chapter$", mdHtml);
-    targetFile.WriteAllText(htmlText);
-}
+var bookTree = new CompilerBookTree(bookDir, bookParser);
 
-void BuildZ2C()
-{
-    var z2cDir = sourceDir.ChildDirectory("zero2compiler");
-    var templateFile = z2cDir.ChildFile("template.html");
-    //templateFile.CopyTo(targetDir.ChildFile("contents.html"));
+bookTree.AddSection("welcome.md", [
+    "introduction.md",
+]);
 
-    string htmlTemplateText = templateFile.ReadAllText();
-    CompileChapterMarkdown(htmlTemplateText, z2cDir.ChildDirectory("1-introduction").ChildFile("chapter1.md"), targetDir.ChildFile("chapter1.html"));
-}
+bookTree.AddSection("lexical-analysis.md", [
+    "what-is-lexical-analysis.md"
+]);
+
+var bookBuilder = new CompilerBookBuilder(bookDir);
+bookBuilder.Build(bookTree, targetDir.ChildDirectory("compiler-book"));

@@ -67,3 +67,155 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ut rhoncus ex. Pr
 The Hibiku language
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ut rhoncus ex. Praesent vel tempus dolor. Donec id consequat nulla. Aliquam mi metus, pharetra non posuere sed, sollicitudin vitae leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nec tortor quis magna ullamcorper condimentum. Pellentesque tincidunt massa at condimentum posuere. Mauris a tempus risus, nec dictum leo. In feugiat felis sit amet leo laoreet, eget rutrum libero mollis. Maecenas in sem risus. Curabitur vitae ultricies tortor. In vulputate eget nisi ac tempor. Ut rhoncus, justo eget scelerisque eleifend, nulla justo blandit justo, non eleifend nisi sapien nec erat.
+
+<div class="challenges">
+
+## Challenges
+
+1.  The lexical grammars of Python and Haskell are not *regular*. What does that
+    mean, and why aren't they?
+
+1.  Aside from separating tokens -- distinguishing `print foo` from `printfoo`
+    -- spaces aren't used for much in most languages. However, in a couple of
+    dark corners, a space *does* affect how code is parsed in CoffeeScript,
+    Ruby, and the C preprocessor. Where and what effect does it have in each of
+    those languages?
+
+1.  Our scanner here, like most, discards comments and whitespace since those
+    aren't needed by the parser. Why might you want to write a scanner that does
+    *not* discard those? What would it be useful for?
+
+1.  Add support to Lox's scanner for C-style `/* ... */` block comments. Make
+    sure to handle newlines in them. Consider allowing them to nest. Is adding
+    support for nesting more work than you expected? Why?
+
+[Test Link](https://github.com/nashiora)
+
+</div>
+
+<div class="design-note">
+
+## Design Note: Implicit Semicolons
+
+Programmers today are spoiled for choice in languages and have gotten picky
+about syntax. They want their language to look clean and modern. One bit of
+syntactic lichen that almost every new language scrapes off (and some ancient
+ones like BASIC never had) is `;` as an explicit statement terminator.
+
+Instead, they treat a newline as a statement terminator where it makes sense to
+do so. The "where it makes sense" part is the challenging bit. While *most*
+statements are on their own line, sometimes you need to spread a single
+statement across a couple of lines. Those intermingled newlines should not be
+treated as terminators.
+
+Most of the obvious cases where the newline should be ignored are easy to
+detect, but there are a handful of nasty ones:
+
+* A return value on the next line:
+
+    ```js
+    if (condition) return
+    "value"
+    ```
+
+    Is "value" the value being returned, or do we have a `return` statement with
+    no value followed by an expression statement containing a string literal?
+
+* A parenthesized expression on the next line:
+
+    ```js
+    func
+    (parenthesized)
+    ```
+
+    Is this a call to `func(parenthesized)`, or two expression statements, one
+    for `func` and one for a parenthesized expression?
+
+* A `-` on the next line:
+
+    ```js
+    first
+    -second
+    ```
+
+    Is this `first - second` -- an infix subtraction -- or two expression
+    statements, one for `first` and one to negate `second`?
+
+In all of these, either treating the newline as a separator or not would both
+produce valid code, but possibly not the code the user wants. Across languages,
+there is an unsettling variety of rules used to decide which newlines are
+separators. Here are a couple:
+
+*   [Lua](https://www.lua.org/pil/1.1.html) completely ignores newlines, but carefully controls its grammar such
+    that no separator between statements is needed at all in most cases. This is
+    perfectly legit:
+
+    ```lua
+    a = 1 b = 2
+    ```
+
+    Lua avoids the `return` problem by requiring a `return` statement to be the
+    very last statement in a block. If there is a value after `return` before
+    the keyword `end`, it *must* be for the `return`. For the other two cases,
+    they allow an explicit `;` and expect users to use that. In practice, that
+    almost never happens because there's no point in a parenthesized or unary
+    negation expression statement.
+
+*   [Go](https://golang.org/ref/spec#Semicolons) handles newlines in the scanner. If a newline appears following one
+    of a handful of token types that are known to potentially end a statement,
+    the newline is treated like a semicolon. Otherwise it is ignored. The Go
+    team provides a canonical code formatter, [gofmt](https://golang.org/cmd/gofmt/), and the ecosystem is
+    fervent about its use, which ensures that idiomatic styled code works well
+    with this simple rule.
+
+*   [Python](https://docs.python.org/3.5/reference/lexical_analysis.html#implicit-line-joining) treats all newlines as significant unless an explicit backslash
+    is used at the end of a line to continue it to the next line. However,
+    newlines anywhere inside a pair of brackets (`()`, `[]`, or `{}`) are
+    ignored. Idiomatic style strongly prefers the latter.
+
+    This rule works well for Python because it is a highly statement-oriented
+    language. In particular, Python's grammar ensures a statement never appears
+    inside an expression. C does the same, but many other languages which have a
+    "lambda" or function literal syntax do not.
+
+    An example in JavaScript:
+
+    ```js
+    console.log(function() {
+      statement();
+    });
+    ```
+
+    Here, the `console.log()` *expression* contains a function literal which
+    in turn contains the *statement* `statement();`.
+
+    Python would need a different set of rules for implicitly joining lines if
+    you could get back *into* a <span name="lambda">statement</span> where
+    newlines should become meaningful while still nested inside brackets.
+
+<aside name="lambda">
+
+And now you know why Python's `lambda` allows only a single expression body.
+
+</aside>
+
+*   JavaScript's "[automatic semicolon insertion](https://www.ecma-international.org/ecma-262/5.1/#sec-7.9)" rule is the real odd
+    one. Where other languages assume most newlines *are* meaningful and only a
+    few should be ignored in multi-line statements, JS assumes the opposite. It
+    treats all of your newlines as meaningless whitespace *unless* it encounters
+    a parse error. If it does, it goes back and tries turning the previous
+    newline into a semicolon to get something grammatically valid.
+
+    This design note would turn into a design diatribe if I went into complete
+    detail about how that even *works*, much less all the various ways that
+    JavaScript's "solution" is a bad idea. It's a mess. JavaScript is the only
+    language I know where many style guides demand explicit semicolons after
+    every statement even though the language theoretically lets you elide them.
+
+If you're designing a new language, you almost surely *should* avoid an explicit
+statement terminator. Programmers are creatures of fashion like other humans, and
+semicolons are as passé as ALL CAPS KEYWORDS. Just make sure you pick a set of
+rules that make sense for your language's particular grammar and idioms. And
+don't do what JavaScript did.
+
+</div>
