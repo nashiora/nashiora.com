@@ -61,11 +61,58 @@ public sealed class CompilerBookBuilder(DirectoryInfo bookDir)
             outSectionFile.WriteAllText(sectionHtml);
         }
 
-        string contentsHtml = BookDirectory.ChildFile("contents.html").ReadAllText();
+        string contentsHtml = BuildTableOfContents(tree);
         string contentsNavHtml = BuildNavHtmlForContents(tree);
 
         contentsHtml = htmlTemplateText.Replace("$nav-content$", contentsNavHtml).Replace("$chapter-content$", contentsHtml);
         outDir.ChildFile("contents.html").WriteAllText(contentsHtml);
+    }
+
+    private string BuildTableOfContents(CompilerBookTree tree)
+    {
+        const int MaxNumSectionsInFirstColumn = 3;
+
+        var builder = new StringBuilder();
+        builder.AppendLine(@"<div class=""contents""><h1 class=""part"">Table of Contents</h1><div class=""chapters""><div class=""columns"">");
+
+        builder.AppendLine(@"<div class=""first"">");
+        for (int i = 0; i < Math.Min(MaxNumSectionsInFirstColumn, tree.Sections.Length); i++)
+        {
+            var section = tree.Sections[i];
+            BuildSection(section);
+        }
+
+        builder.AppendLine(@"</div>");
+
+        builder.AppendLine(@"<div class=""second"">");
+        for (int i = MaxNumSectionsInFirstColumn; i < tree.Sections.Length; i++)
+        {
+            var section = tree.Sections[i];
+            BuildSection(section);
+        }
+
+        builder.AppendLine(@"</div>");
+
+        builder.AppendLine(@"</div></div></div>");
+        return builder.ToString();
+
+        void BuildSection(CompilerBookSection section)
+        {
+            builder.AppendLine($@"<h2><span class=""num"">{roman[section.SectionNumber - 1]}.</span><a href=""/compiler-book/{section.FileNameWithoutExtension}.html"" name=""{section.FileNameWithoutExtension}"">{section.SectionTitle}</a></h2>");
+            builder.AppendLine("<ul>");
+            for (int i = 0; i < section.Chapters.Length; i++)
+            {
+                var chapter = section.Chapters[i];
+                BuildChapter(chapter);
+            }
+
+            builder.AppendLine("</ul>");
+        }
+
+        void BuildChapter(CompilerBookChapter chapter)
+        {
+            builder.AppendLine($@"<li><span class=""num"">{chapter.ChapterNumber}.</span><a href=""/compiler-book/{chapter.FileNameWithoutExtension}.html"">{chapter.ChapterTitle}</a></li>");
+        }
     }
 
     private void BuildNavHtmlHeader(CompilerBookTree tree, StringBuilder builder, string url, string title)

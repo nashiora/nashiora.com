@@ -30,10 +30,16 @@ var bookTree = new CompilerBookTree(bookDir, bookParser);
 
 bookTree.AddSection("welcome.md", [
     "introduction.md",
+    "the-hibiku-language.md",
+]);
+
+bookTree.AddSection("project-setup.md", [
+    "project-file-structure.md",
+    "project-building.md",
 ]);
 
 bookTree.AddSection("lexical-analysis.md", [
-    "what-is-lexical-analysis.md"
+    "creating-a-lexer.md"
 ]);
 
 var bookBuilder = new CompilerBookBuilder(bookDir);
