@@ -28,6 +28,7 @@ time, mark, audio, video {
     --foreground-dim: #909090;
     --primary: #FF97A0;
     --secondary: #67B7FF;
+    --line-height: 1.4rem;
 }
 
 html,
@@ -141,7 +142,7 @@ main {
     font-size: 1.2rem;
     margin-left: calc(336px + 1rem);
     width: 925px;
-    line-height: 1.4rem;
+    line-height: var(--line-height);
 }
 
 article {
@@ -251,46 +252,47 @@ article aside {
     width: 250px;
     border-top: solid 1px var(--foreground);
     font-size: 1rem;
+    margin-top: calc(1 * var(--line-height));
 }
 
 article aside.up1 {
-    margin-top: calc(-1 * 1.2rem);
+    margin-top: calc(-1 * var(--line-height));
 }
 
 article aside.up2 {
-    margin-top: calc(-2 * 1.2rem);
+    margin-top: calc(-2 * var(--line-height));
 }
 
 article aside.up3 {
-    margin-top: calc(-3 * 1.2rem);
+    margin-top: calc(-3 * var(--line-height));
 }
 
 article aside.up4 {
-    margin-top: calc(-4 * 1.2rem);
+    margin-top: calc(-4 * var(--line-height));
 }
 
 article aside.up5 {
-    margin-top: calc(-5 * 1.2rem);
+    margin-top: calc(-5 * var(--line-height));
 }
 
 article aside.down1 {
-    margin-top: calc(1 * 1.2rem);
+    margin-top: calc(2 * var(--line-height));
 }
 
 article aside.down2 {
-    margin-top: calc(2 * 1.2rem);
+    margin-top: calc(3 * var(--line-height));
 }
 
 article aside.down3 {
-    margin-top: calc(3 * 1.2rem);
+    margin-top: calc(4 * var(--line-height));
 }
 
 article aside.down4 {
-    margin-top: calc(4 * 1.2rem);
+    margin-top: calc(5 * var(--line-height));
 }
 
 article aside.down5 {
-    margin-top: calc(5 * 1.2rem);
+    margin-top: calc(6 * var(--line-height));
 }
 
 article div.challenges,
