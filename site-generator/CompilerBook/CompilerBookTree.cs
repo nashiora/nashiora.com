@@ -1,10 +1,24 @@
 using Markdig;
 using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 
 namespace SiteGenerator.CompilerBook;
 
 public sealed class CompilerBookTree(DirectoryInfo rootDirectory, CompilerBookChapterParser parser)
 {
+    private static readonly string[] roman = [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+    ];
+
     public DirectoryInfo RootDirectory { get; } = rootDirectory;
     public CompilerBookChapterParser ChapterParser { get; } = parser;
     public CompilerBookSection[] Sections => [.. _sections];
@@ -38,7 +52,7 @@ public sealed class CompilerBookTree(DirectoryInfo rootDirectory, CompilerBookCh
         int sectionNumber = _sections.Count + 1;
 
         var sectionDoc = ChapterParser.Parse(sectionSourceFile, [
-            new("$section$", sectionNumber.ToString())
+            new("$section$", roman[sectionNumber - 1])
         ]);
 
         var section = new CompilerBookSection()
@@ -61,6 +75,18 @@ public sealed class CompilerBookSection
     public required CompilerBookChapter[] Chapters { get; init; }
 
     public required MarkdownDocument MarkdownDocument { get; init; }
+
+    public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(SourceFile.Name);
+
+    public string SectionTitle
+    {
+        get
+        {
+            var firstHeader = (HeadingBlock)MarkdownDocument.First(x => x is HeadingBlock);
+            string headerText = ((LiteralInline)firstHeader.Inline!.FirstChild!).Content.ToString();
+            return headerText;
+        }
+    }
 }
 
 public sealed class CompilerBookChapter
@@ -69,4 +95,17 @@ public sealed class CompilerBookChapter
     public required FileInfo SourceFile { get; init; }
 
     public required MarkdownDocument MarkdownDocument { get; init; }
+
+
+    public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(SourceFile.Name);
+
+    public string ChapterTitle
+    {
+        get
+        {
+            var firstHeader = (HeadingBlock)MarkdownDocument.First(x => x is HeadingBlock);
+            string headerText = ((LiteralInline)firstHeader.Inline!.FirstChild!).Content.ToString();
+            return headerText;
+        }
+    }
 }
