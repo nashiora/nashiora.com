@@ -40,6 +40,17 @@ body {
     padding: 0;
 }
 
+code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    padding: 2px;
+    background-color: var(--panel);
+}
+
+em {
+    font-style: italic;
+}
+
 nav {
     margin: 0;
     position: fixed;
@@ -130,7 +141,7 @@ main {
     font-size: 1.2rem;
     margin-left: calc(336px + 1rem);
     width: 925px;
-    line-height: 1.2rem;
+    line-height: 1.4rem;
 }
 
 article {
@@ -231,7 +242,6 @@ article blockquote cite::before {
 }
 
 article ul {
-    margin-top: 1.75rem;
     margin-left: 2rem;
 }
 
