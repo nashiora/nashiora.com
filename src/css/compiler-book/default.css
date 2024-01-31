@@ -1,0 +1,115 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, main, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+:root {
+    --line-height: 1.4rem;
+    --paragraph-spacing: 0.75rem;
+    --title-spacing: 2rem;
+    --heading-spacing: 1.5rem;
+    --font-size: 1rem;
+    --code-font-size: 0.8rem;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --background: #E7E7E7;
+        --panel: #C7C7C7;
+        --panel-challenges: #ff97a01A;
+        --panel-design-note: #67B7FF1A;
+        --foreground: #000000;
+        --foreground-dim: #707070;
+        --primary: #FF97A0;
+        --secondary: #67B7FF;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #1B1B1B;
+        --panel: #343434;
+        --panel-challenges: #ff97a01A;
+        --panel-design-note: #67B7FF1A;
+        --foreground: #FAFAFA;
+        --foreground-dim: #909090;
+        --primary: #FF97A0;
+        --secondary: #67B7FF;
+    }
+}
+
+html,
+body {
+    height:100vh;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: var(--font-size);
+    background: var(--background);
+    color: var(--foreground);
+    margin: 0;
+    padding: 0;
+}
+
+article {
+    font-family: Georgia, Times, 'Times New Roman', serif;
+    padding: 0 0.5rem 0 0.5rem;
+}
+
+article p {
+    margin: var(--paragraph-spacing) 0 var(--paragraph-spacing) 0;
+}
+
+article h1 {
+    padding-top: var(--title-spacing);
+    font-size: calc(2 * var(--font-size));
+}
+
+article h2 {
+    padding-top: var(--heading-spacing);
+    font-size: calc(1.75 * var(--font-size));
+}
+
+article h3 {
+    padding-top: var(--heading-spacing);
+    font-size: calc(1.5 * var(--font-size));
+    font-style: italic;
+}
+
+article div.number1 {
+    float: right;
+    padding-top: var(--title-spacing);
+    font-size: calc(2 * var(--font-size));
+    color: var(--foreground-dim);
+}
+
+code {
+    background-color: var(--panel);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: var(--code-font-size);
+}
+
+pre {
+    background-color: var(--panel);
+    margin: var(--paragraph-spacing) 0.25rem 0 0.25rem;
+    padding: 0.5rem;
+    line-height: var(--code-font-size);
+}
+
+em {
+    font-style: italic;
+}

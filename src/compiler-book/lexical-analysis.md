@@ -14,8 +14,6 @@ Programming languages have strict rules that source code must follow to be
 considered valid. Think of your favorite programming language and what you
 know about its rules, its grammar. How would you represent that?
 
-<div class="number3">$section$.$chapter$.1</div>
-
 ### Regular Expressions
 
 If you thought of regular expressions, then you're on to something. Regular
@@ -72,8 +70,6 @@ Regular expressions sound very promising, but they're ultimately not the
 solution for most programming languages. In their absense, what else can
 we do to make sense of source text?
 
-<div class="number3">$section$.$chapter$.2</div>
-
 ### Parser Generators
 
 You may be familiar with tools such as `lex` and `yacc`. Tools like these are
@@ -106,8 +102,6 @@ to solve this problem on our own, from scratch.
 
 The following chapters will explain how to build your own lexer and parser
 completely from scratch.
-
-<div class="number3">$section$.$chapter$.3</div>
 
 ### What is a Lexer?
 
@@ -146,8 +140,6 @@ This doesn't give us any actual structure just yet. What it does is give us is a
 significantly more usable way to think about source text. Now we aren't thinking
 in terms of characters or arbitrary strings of text, but well defined words that
 have meaning.
-
-<div class="number3">$section$.$chapter$.4</div>
 
 ### What is a Parser?
 

@@ -29,6 +29,7 @@ public sealed class CompilerBookBuilder(DirectoryInfo bookDir)
 
         string htmlTemplateText = BookDirectory.ChildFile("page-template.html").ReadAllText();
 
+        string prevUrl, nextUrl;
         for (int i = 0; i < tree.Sections.Length; i++)
         {
             var section = tree.Sections[i];
@@ -49,22 +50,34 @@ public sealed class CompilerBookBuilder(DirectoryInfo bookDir)
                 var chapterDoc = chapter.MarkdownDocument;
                 string chapterHtml = chapterDoc.ToHtml();
 
-                string chapterNavHtml = BuildNavHtmlForChatper(tree, i, j);
+                string chapterNavHtml = BuildNavHtmlForChatper(tree, i, j, out prevUrl, out nextUrl);
 
-                chapterHtml = htmlTemplateText.Replace("$nav-content$", chapterNavHtml).Replace("$chapter-content$", chapterHtml);
+                chapterHtml = htmlTemplateText
+                    .Replace("$nav-content$", chapterNavHtml)
+                    .Replace("$nav-prev-url$", prevUrl)
+                    .Replace("$nav-next-url$", nextUrl)
+                    .Replace("$chapter-content$", chapterHtml);
                 outChapterFile.WriteAllText(chapterHtml);
             }
 
-            string sectionNavHtml = BuildNavHtmlForSection(tree, i);
+            string sectionNavHtml = BuildNavHtmlForSection(tree, i, out prevUrl, out nextUrl);
 
-            sectionHtml = htmlTemplateText.Replace("$nav-content$", sectionNavHtml).Replace("$chapter-content$", sectionHtml);
+            sectionHtml = htmlTemplateText
+                .Replace("$nav-content$", sectionNavHtml)
+                .Replace("$nav-prev-url$", prevUrl)
+                .Replace("$nav-next-url$", nextUrl)
+                .Replace("$chapter-content$", sectionHtml);
             outSectionFile.WriteAllText(sectionHtml);
         }
 
         string contentsHtml = BuildTableOfContents(tree);
-        string contentsNavHtml = BuildNavHtmlForContents(tree);
+        string contentsNavHtml = BuildNavHtmlForContents(tree, out prevUrl, out nextUrl);
 
-        contentsHtml = htmlTemplateText.Replace("$nav-content$", contentsNavHtml).Replace("$chapter-content$", contentsHtml);
+        contentsHtml = htmlTemplateText
+            .Replace("$nav-content$", contentsNavHtml)
+            .Replace("$nav-prev-url$", prevUrl)
+            .Replace("$nav-next-url$", nextUrl)
+            .Replace("$chapter-content$", contentsHtml);
         outDir.ChildFile("contents.html").WriteAllText(contentsHtml);
     }
 
@@ -120,7 +133,7 @@ public sealed class CompilerBookBuilder(DirectoryInfo bookDir)
         builder.AppendLine($@"<h2><a href=""{url}"">{title}</a></h2>");
     }
 
-    private string BuildNavHtmlForContents(CompilerBookTree tree)
+    private string BuildNavHtmlForContents(CompilerBookTree tree, out string prevUrl, out string nextUrl)
     {
         var builder = new StringBuilder();
         BuildNavHtmlHeader(tree, builder, "/compiler-book/contents.html", "Table of Contents");
@@ -133,17 +146,20 @@ public sealed class CompilerBookBuilder(DirectoryInfo bookDir)
             builder.AppendLine($@"    <li><a href=""/compiler-book/{section.FileNameWithoutExtension}.html""><small>{roman[i]}</small>{sectionTitle}</a></li>");
         }
 
+        prevUrl = "/compiler-book/contents.html";
+        nextUrl = $"/compiler-book/{tree.Sections[0].FileNameWithoutExtension}.html";
+
         builder.AppendLine($@"</ul>");
         builder.AppendLine($@"<div class=""prev-next"">");
-        builder.AppendLine($@"    <a class=""left"" href=""/compiler-book/contents.html"">← Previous</a>");
+        builder.AppendLine($@"    <a class=""left"" href=""{prevUrl}"">← Previous</a>");
         builder.AppendLine($@"    <a href=""/compiler-book/contents.html"">↑ Up</a>");
-        builder.AppendLine($@"    <a class=""right"" href=""/compiler-book/{tree.Sections[0].FileNameWithoutExtension}.html"">Next →</a>");
+        builder.AppendLine($@"    <a class=""right"" href=""{nextUrl}"">Next →</a>");
         builder.AppendLine($@"</div>");
 
         return builder.ToString();
     }
 
-    private string BuildNavHtmlForSection(CompilerBookTree tree, int sectionIndex)
+    private string BuildNavHtmlForSection(CompilerBookTree tree, int sectionIndex, out string prevUrl, out string nextUrl)
     {
         var section = tree.Sections[sectionIndex];
         string url = $"/compiler-book/{section.FileNameWithoutExtension}.html";
@@ -159,24 +175,26 @@ public sealed class CompilerBookBuilder(DirectoryInfo bookDir)
             builder.AppendLine($@"    <li><a href=""/compiler-book/{chapter.FileNameWithoutExtension}.html""><small>{chapter.ChapterNumber}</small>{chapterTitle}</a></li>");
         }
 
-        string prevHref = "/compiler-book/contents.html";
+        prevUrl = "/compiler-book/contents.html";
         if (sectionIndex > 0)
         {
             var prevSection = tree.Sections[sectionIndex - 1];
-            prevHref = $"/compiler-book/{prevSection.Chapters.Last().FileNameWithoutExtension}.html";
+            prevUrl = $"/compiler-book/{prevSection.Chapters.Last().FileNameWithoutExtension}.html";
         }
+
+        nextUrl = $"/compiler-book/{section.Chapters[0].FileNameWithoutExtension}.html";
 
         builder.AppendLine($@"</ul>");
         builder.AppendLine($@"<div class=""prev-next"">");
-        builder.AppendLine($@"    <a class=""left"" href=""{prevHref}"">← Previous</a>");
+        builder.AppendLine($@"    <a class=""left"" href=""{prevUrl}"">← Previous</a>");
         builder.AppendLine($@"    <a href=""/compiler-book/contents.html"">↑ Up</a>");
-        builder.AppendLine($@"    <a class=""right"" href=""/compiler-book/{section.Chapters[0].FileNameWithoutExtension}.html"">Next →</a>");
+        builder.AppendLine($@"    <a class=""right"" href=""{nextUrl}"">Next →</a>");
         builder.AppendLine($@"</div>");
 
         return builder.ToString();
     }
 
-    private string BuildNavHtmlForChatper(CompilerBookTree tree, int sectionIndex, int chapterIndex)
+    private string BuildNavHtmlForChatper(CompilerBookTree tree, int sectionIndex, int chapterIndex, out string prevUrl, out string nextUrl)
     {
         var chapter = tree.Sections[sectionIndex].Chapters[chapterIndex];
         string url = $"/compiler-book/{chapter.FileNameWithoutExtension}.html";
@@ -184,37 +202,36 @@ public sealed class CompilerBookBuilder(DirectoryInfo bookDir)
         var builder = new StringBuilder();
         BuildNavHtmlHeader(tree, builder, url, chapter.ChapterTitle);
 
-        string prevHref;
         if (chapterIndex > 0)
         {
             var prevChapter = tree.Sections[sectionIndex].Chapters[chapterIndex - 1];
-            prevHref = $"/compiler-book/{prevChapter.FileNameWithoutExtension}.html";
+            prevUrl = $"/compiler-book/{prevChapter.FileNameWithoutExtension}.html";
         }
         else
         {
-            prevHref = $"/compiler-book/{tree.Sections[sectionIndex].FileNameWithoutExtension}.html";
+            prevUrl = $"/compiler-book/{tree.Sections[sectionIndex].FileNameWithoutExtension}.html";
         }
 
-        string? nextHref = null;
+        nextUrl = "#";
         if (chapterIndex + 1 < tree.Sections[sectionIndex].Chapters.Length)
         {
             var nextChapter = tree.Sections[sectionIndex].Chapters[chapterIndex + 1];
-            nextHref = $"/compiler-book/{nextChapter.FileNameWithoutExtension}.html";
+            nextUrl = $"/compiler-book/{nextChapter.FileNameWithoutExtension}.html";
         }
         else if (sectionIndex + 1 < tree.Sections.Length)
         {
             var nextSection = tree.Sections[sectionIndex + 1];
-            nextHref = $"/compiler-book/{nextSection.FileNameWithoutExtension}.html";
+            nextUrl = $"/compiler-book/{nextSection.FileNameWithoutExtension}.html";
         }
 
         builder.AppendLine($@"<ul>");
         //builder.AppendLine($@"    <li><a><small>I</small>Something</a></li>");
         builder.AppendLine($@"</ul>");
         builder.AppendLine($@"<div class=""prev-next"">");
-        builder.AppendLine($@"    <a class=""left"" href=""{prevHref}"">← Previous</a>");
+        builder.AppendLine($@"    <a class=""left"" href=""{prevUrl}"">← Previous</a>");
         builder.AppendLine($@"    <a href=""/compiler-book/{tree.Sections[sectionIndex].FileNameWithoutExtension}.html"">↑ Up</a>");
-        if (nextHref is not null)
-            builder.AppendLine($@"    <a class=""right"" href=""{nextHref}"">Next →</a>");
+        if (nextUrl != "#")
+            builder.AppendLine($@"    <a class=""right"" href=""{nextUrl}"">Next →</a>");
         builder.AppendLine($@"</div>");
 
         return builder.ToString();
