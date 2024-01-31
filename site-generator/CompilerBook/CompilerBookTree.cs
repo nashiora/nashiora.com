@@ -28,6 +28,10 @@ public sealed class CompilerBookTree(DirectoryInfo rootDirectory, CompilerBookCh
 
     public void AddSection(string sectionFileName, string[] chapterFileNames)
     {
+
+        var sectionSourceFile = RootDirectory.ChildFile(sectionFileName);
+        int sectionNumber = _sections.Count + 1;
+
         var chapters = new List<CompilerBookChapter>();
         foreach (string chapterFileName in chapterFileNames)
         {
@@ -35,7 +39,9 @@ public sealed class CompilerBookTree(DirectoryInfo rootDirectory, CompilerBookCh
             int chapterNumber = ++_chapterCount;
 
             MarkdownDocument chapterDoc = ChapterParser.Parse(chapterSourceFile, [
-                new("$chapter$", chapterNumber.ToString())
+                new("$chapter$", chapterNumber.ToString()),
+                new("$section$", sectionNumber.ToString()),
+                new("$section-roman$", roman[sectionNumber - 1]),
             ]);
 
             var chapter = new CompilerBookChapter()
@@ -48,11 +54,10 @@ public sealed class CompilerBookTree(DirectoryInfo rootDirectory, CompilerBookCh
             chapters.Add(chapter);
         }
 
-        var sectionSourceFile = RootDirectory.ChildFile(sectionFileName);
-        int sectionNumber = _sections.Count + 1;
-
         var sectionDoc = ChapterParser.Parse(sectionSourceFile, [
-            new("$section$", roman[sectionNumber - 1])
+            new("$chapter$", "0"),
+            new("$section$", sectionNumber.ToString()),
+            new("$section-roman$", roman[sectionNumber - 1]),
         ]);
 
         var section = new CompilerBookSection()
@@ -95,7 +100,6 @@ public sealed class CompilerBookChapter
     public required FileInfo SourceFile { get; init; }
 
     public required MarkdownDocument MarkdownDocument { get; init; }
-
 
     public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(SourceFile.Name);
 
