@@ -4,7 +4,7 @@ function toggle_expandable_nav() {
 
 function handle_nav_pinned() {
     const nav = document.getElementById("nav-floating");
-    if (window.scrollY > 70) {
+    if (window.scrollY > 90) {
         nav.classList.add("pinned");
     } else {
         nav.classList.remove("pinned");
