@@ -21,6 +21,7 @@ targetDir.Create();
 sourceDir.CopyTo(targetDir, false);
 targetDir.ChildFile("template.html").Delete();
 
+sourceDir.ChildDirectory("js").CopyTo(targetDir.ChildDirectory("js"));
 sourceDir.ChildDirectory("css").CopyTo(targetDir.ChildDirectory("css"));
 sourceDir.ChildDirectory("img").CopyTo(targetDir.ChildDirectory("img"));
 

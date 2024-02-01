@@ -19,6 +19,7 @@
     <link href="/css/compiler-book/tablet.css" media="only screen and (min-width: 768px) and (max-width: 1083.98px)"
         rel="stylesheet">
     <link href="/css/compiler-book/desktop.css" media="only screen and (min-width: 1084px)" rel="stylesheet">
+    <link href="/css/compiler-book/nav.css" media="only screen and (min-width: 768px)" rel="stylesheet">
     <link href="/css/compiler-book/print.css" media="print" rel="stylesheet">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
@@ -29,26 +30,38 @@
 <body>
     <nav class="wide shadow-5">
         <h1 class="logo">
-            <a href="/compiler-book/contents.html">Zero to Compiler</a>
+            <a class="branding" href="/compiler-book/contents.html">Zero to Compiler</a>
         </h1>
         <div class="overview">
             $nav-content$
         </div>
     </nav>
 
-    <nav class="narrow">
+    <nav class="narrow shadow-5">
         <a class="prev" href="$nav-prev-url$">←</a>
         <a class="branding" href="/compiler-book/contents.html">Zero to Compiler</a>
         <a class="next" href="$nav-next-url$">→</a>
     </nav>
 
     <main>
+        <div class="nav-wrapper">
+            <nav id="nav-floating" class="floating shadow-5">
+                <a class="branding" href="/compiler-book/contents.html">Zero to Compiler</a>
+
+                <div id="nav-expandable" class="overview expandable">
+                    $nav-content$
+                </div>
+
+                <a id="expand-nav" class="expand-nav">≡</a>
+            </nav>
+        </div>
+
         <article>
             $chapter-content$
         </article>
     </main>
 
-    <script src="./main.js"></script>
+    <script src="/js/compiler-book/default.js"></script>
 </body>
 
 </html>

@@ -30,27 +30,31 @@ time, mark, audio, video {
 
 @media (prefers-color-scheme: light) {
     :root {
-        --background: #E7E7E7;
-        --panel: #C7C7C7;
-        --panel-challenges: #ff97a01A;
-        --panel-design-note: #67B7FF1A;
+        --background: #FAFAFA;
+        --background-branding: #871754;
+        --panel: #CCCCCC;
+        --panel-challenges: #8717541A;
+        --panel-design-note: #389FF91A;
         --foreground: #000000;
+        --foreground-branding: #FAFAFA;
         --foreground-dim: #707070;
-        --primary: #FF97A0;
-        --secondary: #67B7FF;
+        --primary: #FFC1FF;
+        --secondary: #389FF9;
     }
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         --background: #1B1B1B;
+        --background-branding: #871754;
         --panel: #343434;
-        --panel-challenges: #ff97a01A;
-        --panel-design-note: #67B7FF1A;
+        --panel-challenges: #8717541A;
+        --panel-design-note: #389FF91A;
         --foreground: #FAFAFA;
+        --foreground-branding: #FAFAFA;
         --foreground-dim: #909090;
-        --primary: #FF97A0;
-        --secondary: #67B7FF;
+        --primary: #FFC1FF;
+        --secondary: #389FF9;
     }
 }
 
@@ -76,16 +80,19 @@ article p {
 
 article h1 {
     padding-top: var(--title-spacing);
+    margin-bottom: var(--paragraph-spacing);
     font-size: calc(2 * var(--font-size));
 }
 
 article h2 {
     padding-top: var(--heading-spacing);
+    margin-bottom: var(--paragraph-spacing);
     font-size: calc(1.75 * var(--font-size));
 }
 
 article h3 {
     padding-top: var(--heading-spacing);
+    margin-bottom: var(--paragraph-spacing);
     font-size: calc(1.5 * var(--font-size));
     font-style: italic;
 }
@@ -95,12 +102,15 @@ article div.number1 {
     padding-top: var(--title-spacing);
     font-size: calc(2 * var(--font-size));
     color: var(--foreground-dim);
+    margin-right: 0.5rem;
 }
 
 code {
     background-color: var(--panel);
     font-family: 'Courier New', Courier, monospace;
     font-size: var(--code-font-size);
+    padding: 0.15rem;
+    border-radius: 0.3rem;
 }
 
 pre {
@@ -108,8 +118,43 @@ pre {
     margin: var(--paragraph-spacing) 0.25rem 0 0.25rem;
     padding: 0.5rem;
     line-height: var(--code-font-size);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),
+        0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12),
+        0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+}
+
+pre code {
+    padding: 0;
+    border-radius: 0;
 }
 
 em {
     font-style: italic;
+}
+
+.shadow-5 {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12),
+        0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12),
+        0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+}
+
+aside {
+    font-size: calc(0.95 * var(--font-size));
+    border-top: solid 1px var(--foreground-dim);
+    border-bottom: solid 1px var(--foreground-dim);
+    padding: 0.25rem 0 0.25rem 0;
+}
+
+aside p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+hr {
+    border-color: var(--foreground-dim);
 }
