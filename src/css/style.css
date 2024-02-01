@@ -11,12 +11,12 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, main, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 
 :root {
@@ -101,8 +101,8 @@ nav ul {
     list-style-type: none;
     border-top: solid 1px var(--foreground);
     border-bottom: solid 1px var(--foreground);
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
