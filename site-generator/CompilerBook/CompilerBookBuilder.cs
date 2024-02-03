@@ -182,7 +182,7 @@ public sealed class CompilerBookBuilder(DirectoryInfo bookDir)
             prevUrl = $"/compiler-book/{prevSection.Chapters.Last().FileNameWithoutExtension}.html";
         }
 
-        nextUrl = $"/compiler-book/{section.Chapters[0].FileNameWithoutExtension}.html";
+        nextUrl = $"/compiler-book/{section.Chapters.LastOrDefault()?.FileNameWithoutExtension ?? "contents"}.html";
 
         builder.AppendLine($@"</ul>");
         builder.AppendLine($@"<div class=""prev-next"">");

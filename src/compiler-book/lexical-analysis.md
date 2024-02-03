@@ -2,75 +2,38 @@
 
 # Lexical Analysis
 
-The first step in any compiler is understanding the source text its been given.
-We write programs in plain text, which doesn't mean anything to a computer on
-its own, so some processing needs to be done to make sense of source code.
+The first step in any compiler is understanding source code. We write programs
+in plain text, which doesn't mean anything to a computer, so some processing
+needs to be done to make sense of it. This processing is called parsing: making
+sense of the various pieces of text, transforming words and symbols into
+constructs with meaning.
 
 If you're not familiar with how compilers work, or the concept of parsing in
 general, I encourage you to seriously sit down and think about how you would
-solve this problem. How do you start to assign meaning to various pieces of the
+solve this problem.
+
+How do you start to assign meaning to various pieces of the
 source code? What kind of structure can you create to represent a program?
 Programming languages have strict rules that source code must follow to be
 considered valid. Think of your favorite programming language and what you
 know about its rules, its grammar. How would you represent that?
 
-### Regular Expressions
-
 If you thought of regular expressions, then you're on to something. Regular
 expressions allow you to describe the shape of text and extract meaning from it,
-and once you're familiar with how to write them they become incredibly powerful.
+and once you're familiar with them, they become incredibly powerful.
 
 There are a couple of problems with regular expressions, though, one of which is
-in their name. Regular expressions are useful for parsing *regular languages*,
-but many programming languages are not strictly regular. The most obvious
-non-regular programming languages are Python and Haskell, or any other language
-with significant indentation. The requirement for all lines in a block to have
-the same indentation level is state that makes these languages non-regular.
+in their name: regular expressions are useful for parsing *regular languages*,
+but the vast majority programming languages simply are not regular. The second
+issue with regular expressions is their performance: regular expression
+evaluators tend to take a significant amount of time to run.
 
-<aside class="down2">
+Regular expressions have their place, but inside a compiler is not one of them.
 
-You don't have to understand all of these concepts. The important takeaway is
-that language semantics, or even just the context around a language
-construction, can cause ambiguities that regular languages can't handle.
+Another option you'll come across when researching compilers is a parser
+generator. These automate the process 
 
-</aside>
-
-Many other languages could be partially described by regular expressions, but
-the language semantics complicate things. An example of this problem comes from
-C. For example, `foo(bar);` is either a call to function `foo` with `bar` as an
-argument, or it's declaring a variable `bar` of type `foo`. This semantic
-distinction depends on if `foo` was previously `typedef`ed. So while you could
-write a regular expression to recognize this construct, you wouldn't know for
-certain which of the two was correct without additional state. C++ makes this
-even worse, as `foo bar();` is either the declaration of a function `bar`
-returning `foo` or a declaration of the variable `bar` invoking the default
-constructor for type `foo`. There are many, many more examples of this in
-popular programming languages. This is not an isolated or uncommon phenomenon.
-
-<aside>
-
-As I'm not providing any benchmarks as evidence for this section, I don't expect
-you to believe my claim, either. I encourage you to take what you learn from
-the first few chapters of this book and compare with a regular expression version
-in your own time if you're curious.
-
-</aside>
-
-The second issue with regular languages is their performance. Regular expression
-evaluators tend to take significantly longer to process than a hand-written
-program doing the same thing. You can aleviate this performance hit by
-precompiling your regular expressions, but they're still not as performant as
-just doing it yourself. If you value the ease of writing regular expressions and
-are not bothered by their slower performance, then do feel free to use them! The
-rest of this book will not make use of regular expressions for the
-implementation of the compiler, so you'll be left to your own devices to
-implement your own versions of them.
-
-Regular expressions sound very promising, but they're ultimately not the
-solution for most programming languages. In their absense, what else can
-we do to make sense of source text?
-
-### Parser Generators
+### Lexer & Parser Generators
 
 You may be familiar with tools such as `lex` and `yacc`. Tools like these are
 usually called parser generators (or "compiler compilers", if you want to be fun

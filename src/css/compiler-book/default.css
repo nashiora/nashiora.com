@@ -38,7 +38,7 @@ time, mark, audio, video {
         --foreground: #000000;
         --foreground-branding: #FAFAFA;
         --foreground-dim: #707070;
-        --primary: #FFC1FF;
+        --primary: #871754;
         --secondary: #389FF9;
     }
 }
@@ -53,7 +53,7 @@ time, mark, audio, video {
         --foreground: #FAFAFA;
         --foreground-branding: #FAFAFA;
         --foreground-dim: #909090;
-        --primary: #FFC1FF;
+        --primary: #871754;
         --secondary: #389FF9;
     }
 }
@@ -115,7 +115,7 @@ code {
 
 pre {
     background-color: var(--panel);
-    margin: var(--paragraph-spacing) 0.25rem 0 0.25rem;
+    margin: var(--paragraph-spacing) 0.25rem calc(1.5 * var(--paragraph-spacing)) 0.25rem;
     padding: 0.5rem;
     line-height: var(--code-font-size);
     border-radius: 0.5rem;
@@ -157,4 +157,40 @@ aside p {
 
 hr {
     border-color: var(--foreground-dim);
+    border-top-width: 0;
+}
+
+.contents {
+    font-family: "Source Sans Pro", sans-serif;
+    color: var(--foreground);
+}
+
+.contents h1,
+.contents h2 {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.contents h1 {
+    font-size: 2rem;
+}
+
+.contents h2 {
+    font-size: 1.4rem;
+}
+
+.contents h3,
+.contents h4 {
+    font-size: 1.1rem;
+}
+
+.contents a {
+    text-decoration: none;
+    color: var(--primary);
+}
+
+.contents .num {
+    display: inline-block;
+    width: 2rem;
 }

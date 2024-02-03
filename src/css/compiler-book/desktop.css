@@ -48,7 +48,7 @@ main {
     position: relative;
     width: var(--main-width);
     margin: 0;
-    margin-left: var(--sidebar-width);
+    margin-left: calc(2rem + var(--sidebar-width));
 }
 
 article {
