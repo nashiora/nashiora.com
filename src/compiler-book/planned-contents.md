@@ -22,6 +22,7 @@ III.  From Source to Syntax
         - Syntax Node Data Layout
     4.  Debug Utilities
     5.  Syntactic Analysis
+        - Types and Inference
 
 IV.   The "Middle End"
 

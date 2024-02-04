@@ -30,32 +30,32 @@ time, mark, audio, video {
 
 @media (prefers-color-scheme: light) {
     :root {
-        --background: #FAFAFA;
-        --background-branding: #871754;
+        --background: #EAF3FA;
+        --background-branding: #F5255A;
         --panel: #0000001A;
         --panel-challenges: #8717542F;
         --panel-design-note: #389FF92F;
         --panel-tangent: #3EF9382F;
-        --foreground: #000000;
-        --foreground-branding: #FAFAFA;
+        --foreground: #040814;
+        --foreground-branding: #EAF3FA;
         --foreground-dim: #707070;
-        --primary: #871754;
+        --primary: #F5255A;
         --secondary: #389FF9;
     }
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --background: #1B1B1B;
-        --background-branding: #871754;
+        --background: #040814;
+        --background-branding: #F5255A;
         --panel: #FFFFFF10;
         --panel-challenge: #87175410;
         --panel-design-note: #389FF910;
         --panel-tangent: #3EF93810;
-        --foreground: #FAFAFA;
-        --foreground-branding: #FAFAFA;
+        --foreground: #EAF3FA;
+        --foreground-branding: #EAF3FA;
         --foreground-dim: #909090;
-        --primary: #871754;
+        --primary: #F5255A;
         --secondary: #389FF9;
     }
 }
@@ -167,12 +167,15 @@ hr {
     color: var(--foreground);
 }
 
-.contents h1,
+.contents h1 {
+    padding-top: 0;
+}
+
 .contents h2,
 .contents h3,
 .contents h4 {
     padding-top: 0;
-    margin: 0.2rem 0;
+    margin: 0.5rem 0;
 }
 
 .contents h1,
