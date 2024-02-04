@@ -24,7 +24,7 @@ time, mark, audio, video {
     --paragraph-spacing: 0.75rem;
     --title-spacing: 2rem;
     --heading-spacing: 1.5rem;
-    --font-size: 1rem;
+    --font-size: 16px;
     --code-font-size: 0.8rem;
 }
 
@@ -32,9 +32,10 @@ time, mark, audio, video {
     :root {
         --background: #FAFAFA;
         --background-branding: #871754;
-        --panel: #CCCCCC;
-        --panel-challenges: #8717541A;
-        --panel-design-note: #389FF91A;
+        --panel: #0000001A;
+        --panel-challenges: #8717542F;
+        --panel-design-note: #389FF92F;
+        --panel-tangent: #3EF9382F;
         --foreground: #000000;
         --foreground-branding: #FAFAFA;
         --foreground-dim: #707070;
@@ -47,9 +48,10 @@ time, mark, audio, video {
     :root {
         --background: #1B1B1B;
         --background-branding: #871754;
-        --panel: #343434;
-        --panel-challenges: #8717541A;
-        --panel-design-note: #389FF91A;
+        --panel: #FFFFFF10;
+        --panel-challenge: #87175410;
+        --panel-design-note: #389FF910;
+        --panel-tangent: #3EF93810;
         --foreground: #FAFAFA;
         --foreground-branding: #FAFAFA;
         --foreground-dim: #909090;
@@ -58,11 +60,14 @@ time, mark, audio, video {
     }
 }
 
+html {
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: var(--font-size);
+}
+
 html,
 body {
     height:100vh;
-    font-family: "Source Sans Pro", sans-serif;
-    font-size: var(--font-size);
     background: var(--background);
     color: var(--foreground);
     margin: 0;
@@ -87,13 +92,13 @@ article h1 {
 article h2 {
     padding-top: var(--heading-spacing);
     margin-bottom: var(--paragraph-spacing);
-    font-size: calc(1.75 * var(--font-size));
+    font-size: calc(1.6 * var(--font-size));
 }
 
 article h3 {
     padding-top: var(--heading-spacing);
     margin-bottom: var(--paragraph-spacing);
-    font-size: calc(1.5 * var(--font-size));
+    font-size: calc(1.2 * var(--font-size));
     font-style: italic;
 }
 
@@ -106,11 +111,8 @@ article div.number1 {
 }
 
 code {
-    background-color: var(--panel);
     font-family: 'Courier New', Courier, monospace;
     font-size: var(--code-font-size);
-    padding: 0.15rem;
-    border-radius: 0.3rem;
 }
 
 pre {
@@ -144,7 +146,7 @@ em {
 }
 
 aside {
-    font-size: calc(0.95 * var(--font-size));
+    font-size: 0.9rem;
     border-top: solid 1px var(--foreground-dim);
     border-bottom: solid 1px var(--foreground-dim);
     padding: 0.25rem 0 0.25rem 0;
@@ -166,6 +168,14 @@ hr {
 }
 
 .contents h1,
+.contents h2,
+.contents h3,
+.contents h4 {
+    padding-top: 0;
+    margin: 0.2rem 0;
+}
+
+.contents h1,
 .contents h2 {
     font-weight: bold;
     text-transform: uppercase;
@@ -174,15 +184,18 @@ hr {
 
 .contents h1 {
     font-size: 2rem;
+    padding: 2rem 0 0 0;
 }
 
 .contents h2 {
     font-size: 1.4rem;
+    margin: 1rem 0 0 0;
 }
 
 .contents h3,
 .contents h4 {
-    font-size: 1.1rem;
+    font-style: normal;
+    font-size: 1.2rem;
 }
 
 .contents a {
@@ -193,4 +206,47 @@ hr {
 .contents .num {
     display: inline-block;
     width: 2rem;
+}
+
+.contents ul {
+    list-style: none;
+    margin-left: 2rem;
+}
+
+.challenge,
+.design-note,
+.tangent {
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 1rem 0;
+}
+
+.challenge {
+    background-color: var(--panel-challenges);
+}
+
+.design-note {
+    background-color: var(--panel-design-note);
+}
+
+.tangent {
+    background-color: var(--panel-tangent);
+}
+
+.challenge h1,
+.design-note h1,
+.tangent h1 {
+    padding: 0;
+}
+
+.challenge h2,
+.design-note h2,
+.tangent h2 {
+    padding: 0;
+}
+
+.challenge h3,
+.design-note h3,
+.tangent h3 {
+    padding: 0;
 }

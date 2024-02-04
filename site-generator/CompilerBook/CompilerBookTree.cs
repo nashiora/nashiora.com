@@ -21,16 +21,16 @@ public sealed class CompilerBookTree(DirectoryInfo rootDirectory, CompilerBookCh
 
     public DirectoryInfo RootDirectory { get; } = rootDirectory;
     public CompilerBookChapterParser ChapterParser { get; } = parser;
-    public CompilerBookSection[] Sections => [.. _sections];
+    public CompilerBookUnit[] Units => [.. _units];
 
-    private readonly List<CompilerBookSection> _sections = [];
+    private readonly List<CompilerBookUnit> _units = [];
     private int _chapterCount = 0;
 
-    public void AddSection(string sectionFileName, string[] chapterFileNames)
+    public void AddUnit(string unitFileName, string[] chapterFileNames)
     {
 
-        var sectionSourceFile = RootDirectory.ChildFile(sectionFileName);
-        int sectionNumber = _sections.Count + 1;
+        var unitSourceFile = RootDirectory.ChildFile(unitFileName);
+        int unitNumber = _units.Count + 1;
 
         var chapters = new List<CompilerBookChapter>();
         foreach (string chapterFileName in chapterFileNames)
@@ -40,8 +40,8 @@ public sealed class CompilerBookTree(DirectoryInfo rootDirectory, CompilerBookCh
 
             MarkdownDocument chapterDoc = ChapterParser.Parse(chapterSourceFile, [
                 new("$chapter$", chapterNumber.ToString()),
-                new("$section$", sectionNumber.ToString()),
-                new("$section-roman$", roman[sectionNumber - 1]),
+                new("$unit$", unitNumber.ToString()),
+                new("$unit-roman$", roman[unitNumber - 1]),
             ]);
 
             var chapter = new CompilerBookChapter()
@@ -54,27 +54,27 @@ public sealed class CompilerBookTree(DirectoryInfo rootDirectory, CompilerBookCh
             chapters.Add(chapter);
         }
 
-        var sectionDoc = ChapterParser.Parse(sectionSourceFile, [
+        var unitDoc = ChapterParser.Parse(unitSourceFile, [
             new("$chapter$", "0"),
-            new("$section$", sectionNumber.ToString()),
-            new("$section-roman$", roman[sectionNumber - 1]),
+            new("$unit$", unitNumber.ToString()),
+            new("$unit-roman$", roman[unitNumber - 1]),
         ]);
 
-        var section = new CompilerBookSection()
+        var unit = new CompilerBookUnit()
         {
-            SectionNumber = sectionNumber,
-            SourceFile = sectionSourceFile,
+            UnitNumber = unitNumber,
+            SourceFile = unitSourceFile,
             Chapters = [.. chapters],
-            MarkdownDocument = sectionDoc,
+            MarkdownDocument = unitDoc,
         };
 
-        _sections.Add(section);
+        _units.Add(unit);
     }
 }
 
-public sealed class CompilerBookSection
+public sealed class CompilerBookUnit
 {
-    public required int SectionNumber { get; init; }
+    public required int UnitNumber { get; init; }
     public required FileInfo SourceFile { get; init; }
 
     public required CompilerBookChapter[] Chapters { get; init; }
@@ -83,12 +83,12 @@ public sealed class CompilerBookSection
 
     public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(SourceFile.Name);
 
-    public string SectionTitle
+    public string UnitTitle
     {
         get
         {
-            var firstHeader = (HeadingBlock)MarkdownDocument.First(x => x is HeadingBlock);
-            string headerText = ((LiteralInline)firstHeader.Inline!.FirstChild!).Content.ToString();
+            var firstHeader = (HeadingBlock?)MarkdownDocument.FirstOrDefault(x => x is HeadingBlock);
+            string headerText = ((LiteralInline)firstHeader?.Inline!.FirstChild!)?.Content.ToString() ?? "MissingTitle";
             return headerText;
         }
     }
@@ -107,8 +107,8 @@ public sealed class CompilerBookChapter
     {
         get
         {
-            var firstHeader = (HeadingBlock)MarkdownDocument.First(x => x is HeadingBlock);
-            string headerText = ((LiteralInline)firstHeader.Inline!.FirstChild!).Content.ToString();
+            var firstHeader = (HeadingBlock?)MarkdownDocument.FirstOrDefault(x => x is HeadingBlock);
+            string headerText = ((LiteralInline)firstHeader?.Inline!.FirstChild!)?.Content.ToString() ?? "MissingTitle";
             return headerText;
         }
     }

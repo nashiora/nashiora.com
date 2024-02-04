@@ -61,3 +61,8 @@ aside {
     left: calc(var(--article-width) + 1rem);
     width: calc(var(--main-width) - var(--article-width) - 1.5rem);
 }
+
+.chapters .columns div {
+    float: left;
+    width: 50%;
+}
