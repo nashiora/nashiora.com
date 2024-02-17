@@ -26,7 +26,7 @@ III.  From Source to Syntax
 
 IV.   The "Middle End"
 
-    1.  Semantic Analysis I
+    1.  Semantic Analysis
         - Type Inference
     2.  Designing a Register Byte Code
         - Other Options for IR

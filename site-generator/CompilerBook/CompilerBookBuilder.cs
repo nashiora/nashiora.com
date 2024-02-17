@@ -1,8 +1,6 @@
 using System.Diagnostics;
 using System.Text;
 using Markdig;
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
 
 namespace SiteGenerator.CompilerBook;
 
