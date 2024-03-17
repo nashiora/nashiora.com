@@ -3,7 +3,11 @@ Local C. Atticus <contact@nashiora.com>
 :description: A reference and guide for modern techniques all compiler writers should know.
 :doctype: book
 :url-repo: https://github.com/nashiora/hibiku
-:toc:
+:icons: font
+:toc: left
+:toclevels: 3
+:toc-title: Contents
+:docinfo: shared
 
 include::chapters/introduction.adoc[]
 
