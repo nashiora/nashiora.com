@@ -182,3 +182,13 @@ Some points I need to keep in mind:
 - Test your material as you write: use your draft chapters as part of your
   lecture course and see how students respond to it. Do they understand the
   concepts you are explaining? Are they able to complete any exercises?.
+
+
+# High level thoughts
+
+- I think the high level idea of including "10 minute" steps to take, where applicable
+  might be a very cool thing to include.
+  Let's try to understand that hobbyist compiler writers espeicially aren't doing this
+  during their work hours, and this is a project they're undertaking in their free time.
+  Maybe not the "10 minute" chunk precisely, but some fuzzy "milestones" to hit that you
+  can set up pretty quickly.

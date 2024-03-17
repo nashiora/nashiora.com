@@ -1,0 +1,29 @@
+== Introduction
+
+For many, compilers are a black-box tool they don't feel the need to understand: source code goes in, and a program or library comes out.
+The internal work to understand what the programmer wrote and how to turn it into a useful piece of software goes largely unknown.
+
+I find compilers fascinating.
+I wish more people had an easily digestible, yet thorough resource for understanding how we program computers.
+As such, this book aims to be as approachable and understandable as possible for hobbyist compiler developers while still being a valuable resource in the long run.
+Ideally, this means most compiler developers, regardless of skill level or experience, will find this a useful reference material or means to deepen their understanding.
+
+I'm a huge proponent that no matter your experience you can still learn something meaningful from any resource on a topic, no matter its target audience;
+sometimes a new perspective from an outside source connects dots in just the right way or frames a concept in a manner you never would have concieved yourself.
+There's always something to be gained by keeping an open mind and being willing to learn.
+
+This book is divided into multiple sections:
+
+. A full guide from zero to a functional compiler.
+Chapters in this section cover one piece at a time, taking you through the basics and explaining how each piece fits in a modern compiler.
+This section is intended to be read linearly, start to finish, and used like a workbook;
+expect to take short, hobbyist friendly steps towards the end goal without feeling overwhelmed.
+
+. Reference material covering a variety of topics such as data structures, algorithms and terminology in more depth than the guide might.
+Chapters in this section take the liberty to discuss a topic in greater detail than the guide.
+This is the more traditional textbook section of the book, so expect to read more and do less.
+
+. An opinionated, discussion and blogpost style section providing more context for the contents of the book.
+This section is still educational, but much more free form.
+The guide section in particular will shortcut some decision making processes in favor of moving foward at a consistent pace.
+Background information on these decisions and related topics can be found here.

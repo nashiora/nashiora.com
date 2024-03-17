@@ -1,0 +1,5 @@
+== Guided Compiler Implementation
+
+In this section
+
+include::chapters/guide/source-text.adoc[]

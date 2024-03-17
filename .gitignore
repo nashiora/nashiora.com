@@ -1,8 +1,4 @@
+.vscode/
 public_html/
 
-nob
-nob.old
 publish.sh
-
-bin/
-obj/

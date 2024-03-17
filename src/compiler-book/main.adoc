@@ -1,0 +1,14 @@
+= Compiler Book
+Local C. Atticus <contact@nashiora.com>
+:description: A reference and guide for modern techniques all compiler writers should know.
+:doctype: book
+:url-repo: https://github.com/nashiora/hibiku
+:toc:
+
+include::chapters/introduction.adoc[]
+
+include::guide.adoc[]
+
+include::reference.adoc[]
+
+include::discussion.adoc[]
