@@ -1,3 +1,7 @@
-=== Understanding Source Text
+== Understanding Source Text
 
-==== Describing a Grammar
+Source text stuff here
+
+=== Describing a Grammar
+
+Grammar description stuff here

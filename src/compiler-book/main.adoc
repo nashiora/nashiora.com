@@ -8,8 +8,10 @@ Local C. Atticus <contact@nashiora.com>
 :toclevels: 3
 :toc-title: Contents
 :docinfo: shared
+:sectnums:
+:partnums:
 
-include::chapters/introduction.adoc[]
+include::introduction.adoc[]
 
 include::guide.adoc[]
 

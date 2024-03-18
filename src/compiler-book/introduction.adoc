@@ -1,4 +1,4 @@
-== Introduction
+= Introduction
 
 For many, compilers are a black-box tool they don't feel the need to understand: source code goes in, and a program or library comes out.
 The internal work to understand what the programmer wrote and how to turn it into a useful piece of software goes largely unknown.
@@ -27,3 +27,5 @@ This is the more traditional textbook section of the book, so expect to read mor
 This section is still educational, but much more free form.
 The guide section in particular will shortcut some decision making processes in favor of moving foward at a consistent pace.
 Background information on these decisions and related topics can be found here.
+
+== Introduction section ???

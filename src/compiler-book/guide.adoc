@@ -1,5 +1,5 @@
-== Guided Compiler Implementation
+= Guided Compiler Implementation
 
-In this section
+Guide section here please
 
 include::chapters/guide/source-text.adoc[]

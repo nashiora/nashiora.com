@@ -1,5 +1,7 @@
 .DEFAULT_GOAL := all
 
+SRC_COMPILER_BOOK = $(wildcard ./src/compiler-book/*.adoc ./src/compiler-book/chapters/*/*.adoc)
+
 SRC_LAYE_DOCS = ./src/laye/docs/
 OUT_LAYE_DOCS = ./public_html/laye/docs/
 
@@ -11,8 +13,8 @@ compiler-book: ./public_html/compiler-book.html
 
 laye: laye-docs
 
-./public_html/compiler-book.html: ./src/compiler-book/main.adoc
-	asciidoctor -o $@ $<
+./public_html/compiler-book.html: $(SRC_COMPILER_BOOK)
+	asciidoctor -o $@ ./src/compiler-book/main.adoc
 
 laye-docs: $(OUT_LAYE_DOCS_FILES)
 

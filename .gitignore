@@ -1,4 +1,5 @@
 .vscode/
 public_html/
+compiler_book_pdf/
 
 publish.sh
